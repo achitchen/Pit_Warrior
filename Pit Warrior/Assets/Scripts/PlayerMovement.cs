@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,16 @@ public class PlayerMovement : MonoBehaviour
 {
     private float lookDirZ = 0f;
     [SerializeField] int speed = 5;
+    [SerializeField] int launchCharge = 0;
+    [SerializeField] int maxLaunchCharge = 5;
     private bool isLookingLeft = false;
     private bool isLookingRight = false;
     private bool isLookingUp = false;
     private bool isLookingDown = false;
+    private bool isChargingLaunch = false;
     public Vector2 movementDir;
+
+    private Rigidbody2D playerRb;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,48 +24,89 @@ public class PlayerMovement : MonoBehaviour
         isLookingRight = false;
         isLookingUp = false;
         isLookingDown = false;
+        isChargingLaunch = false;
         lookDirZ = 0f;
         movementDir = Vector2.zero;
+
+        playerRb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         RotatePlayer();
+        if (Input.GetKey(KeyCode.Space))
+        {
+            //remove forces
+            playerRb.velocity = Vector2.zero;
+            playerRb.angularVelocity = 0f;
+            //start charging
+            if (!isChargingLaunch)
+            {
+                StartCoroutine(addLaunchCharge());
+                isChargingLaunch = true;
+            }
+
+            //add impulse based on charge time
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            playerRb.AddForce(movementDir * launchCharge, ForceMode2D.Impulse);
+            isChargingLaunch = false;
+            launchCharge = 0;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         MovePlayer();
+
+    }
+
+    IEnumerator addLaunchCharge()
+    {
+        if (isChargingLaunch && launchCharge <= maxLaunchCharge)
+        launchCharge++;
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(addLaunchCharge());
     }
 
     private void MovePlayer()
     {
-        transform.Translate(movementDir * speed * Time.deltaTime);
+        //transform.Translate(movementDir * speed * Time.deltaTime)
+        if (!isChargingLaunch)
+        {
+            playerRb.AddForce(movementDir * speed);
+        }
+
         if (isLookingLeft)
         {
             if ((Input.GetKey(KeyCode.W)))
             {
-                movementDir = Vector2.one;
+                movementDir = new Vector2(-1, 1);
             }
             else if ((Input.GetKey(KeyCode.S)))
             {
-                movementDir = new Vector2(-1, 1);
+                movementDir = new Vector2(-1, -1);
             }
             else
             {
-                movementDir = Vector2.up;
+                movementDir = Vector2.left;
             }
         }
         else if (isLookingRight)
         {
             if ((Input.GetKey(KeyCode.W)))
             {
-                movementDir = new Vector2(-1, 1);
+                movementDir = new Vector2(1, 1);
             }
             else if ((Input.GetKey(KeyCode.S)))
             {
-                movementDir = Vector2.one;
+                movementDir = new Vector2 (1,-1);
             }
             else
             {
-                movementDir = Vector2.up;
+                movementDir = Vector2.right;
             }
         }
         else if (isLookingUp)
@@ -70,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if ((Input.GetKey(KeyCode.A)))
             {
-                movementDir = new Vector2(-1, 1);
+                movementDir = new Vector2(-1,1);
             }
             else
             {
@@ -81,20 +128,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if ((Input.GetKey(KeyCode.D)))
             {
-                movementDir = new Vector2(-1, 1);
+                movementDir = new Vector2(1, -1);
             }
             else if ((Input.GetKey(KeyCode.A)))
             {
-                movementDir = Vector2.one;
+                movementDir = new Vector2(-1, -1);
             }
             else
             {
-                movementDir = Vector2.up;
+                movementDir = Vector2.down;
             }
-        }
-        else
-        {
-            movementDir = Vector2.zero;
         }
     }
 
