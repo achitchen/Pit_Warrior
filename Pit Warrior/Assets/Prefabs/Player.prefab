@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   launchCharge: 0
-  maxLaunchCharge: 20
+  maxLaunchCharge: 25
   launchRechargeDelay: 3
   playerShove: {fileID: 0}
   attackStartDelay: 0.2
