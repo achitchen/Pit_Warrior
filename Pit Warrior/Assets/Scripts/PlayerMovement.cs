@@ -9,15 +9,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] int speed = 5;
     [SerializeField] int launchCharge = 0;
     [SerializeField] int maxLaunchCharge = 5;
+    [SerializeField] int launchRechargeDelay = 3;
+    [SerializeField] GameObject playerShove;
+    [SerializeField] float attackStartDelay = 0.2f;
+    [SerializeField] float attackDuration = 0.7f;
+    private bool isMoving = false;
     private bool isLookingLeft = false;
     private bool isLookingRight = false;
     private bool isLookingUp = false;
     private bool isLookingDown = false;
     private bool isChargingLaunch = false;
+    private bool canLaunch = true;
+    private bool canAttack = true;
     public Vector2 movementDir;
 
     private Rigidbody2D playerRb;
-    // Start is called before the first frame update
     void Start()
     {
         isLookingLeft = false;
@@ -25,42 +31,39 @@ public class PlayerMovement : MonoBehaviour
         isLookingUp = false;
         isLookingDown = false;
         isChargingLaunch = false;
+        canLaunch = true;
+        canAttack = true;
+        isMoving = false;
         lookDirZ = 0f;
-        movementDir = Vector2.zero;
+        movementDir = Vector2.up;
 
         playerRb = GetComponent<Rigidbody2D>();
+
+        if (playerShove == null)
+        {
+            playerShove = transform.Find("Shove").gameObject;
+            playerShove.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         RotatePlayer();
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //remove forces
-            playerRb.velocity = Vector2.zero;
-            playerRb.angularVelocity = 0f;
-            //start charging
-            if (!isChargingLaunch)
+        LaunchPlayer();
+        DetermineDirection();
+        //Shove mechanic
+        if (canAttack && Input.GetKeyDown(KeyCode.Return))
             {
-                StartCoroutine(addLaunchCharge());
-                isChargingLaunch = true;
-            }
+            StartCoroutine(attackSequence());
+            //set attack delay
+            StartCoroutine(attackDelay());
+        }
 
-            //add impulse based on charge time
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            playerRb.AddForce(movementDir * launchCharge, ForceMode2D.Impulse);
-            isChargingLaunch = false;
-            launchCharge = 0;
-        }
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
-
     }
 
     IEnumerator addLaunchCharge()
@@ -73,71 +76,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        //transform.Translate(movementDir * speed * Time.deltaTime)
-        if (!isChargingLaunch)
+        if (isMoving && !isChargingLaunch)
         {
             playerRb.AddForce(movementDir * speed);
-        }
-
-        if (isLookingLeft)
-        {
-            if ((Input.GetKey(KeyCode.W)))
-            {
-                movementDir = new Vector2(-1, 1);
-            }
-            else if ((Input.GetKey(KeyCode.S)))
-            {
-                movementDir = new Vector2(-1, -1);
-            }
-            else
-            {
-                movementDir = Vector2.left;
-            }
-        }
-        else if (isLookingRight)
-        {
-            if ((Input.GetKey(KeyCode.W)))
-            {
-                movementDir = new Vector2(1, 1);
-            }
-            else if ((Input.GetKey(KeyCode.S)))
-            {
-                movementDir = new Vector2 (1,-1);
-            }
-            else
-            {
-                movementDir = Vector2.right;
-            }
-        }
-        else if (isLookingUp)
-        {
-            if ((Input.GetKey(KeyCode.D)))
-            {
-                movementDir = Vector2.one;
-            }
-            else if ((Input.GetKey(KeyCode.A)))
-            {
-                movementDir = new Vector2(-1,1);
-            }
-            else
-            {
-                movementDir = Vector2.up;
-            }
-        }
-        else if (isLookingDown)
-        {
-            if ((Input.GetKey(KeyCode.D)))
-            {
-                movementDir = new Vector2(1, -1);
-            }
-            else if ((Input.GetKey(KeyCode.A)))
-            {
-                movementDir = new Vector2(-1, -1);
-            }
-            else
-            {
-                movementDir = Vector2.down;
-            }
         }
     }
 
@@ -162,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKey(KeyCode.S) && !isLookingRight && !isLookingUp && !isLookingLeft)
         {
             lookDirZ = 180f;
-            isLookingDown = true;
+            isLookingDown = true;;
         }
         if (Input.GetKeyUp(KeyCode.A) && isLookingLeft)
         {
@@ -180,5 +121,126 @@ public class PlayerMovement : MonoBehaviour
         {
             isLookingDown = false;
         }
+    }
+
+    private void DetermineDirection()
+    {
+        if (isLookingLeft)
+        {
+            isMoving = true;
+            if ((Input.GetKey(KeyCode.W)))
+            {
+                movementDir = new Vector2(-1, 1);
+            }
+            else if ((Input.GetKey(KeyCode.S)))
+            {
+                movementDir = new Vector2(-1, -1);
+            }
+            else
+            {
+                movementDir = Vector2.left;
+            }
+        }
+        else if (isLookingRight)
+        {
+            isMoving = true;
+            if ((Input.GetKey(KeyCode.W)))
+            {
+                movementDir = new Vector2(1, 1);
+            }
+            else if ((Input.GetKey(KeyCode.S)))
+            {
+                movementDir = new Vector2(1, -1);
+            }
+            else
+            {
+                movementDir = Vector2.right;
+            }
+        }
+        else if (isLookingUp)
+        {
+            isMoving = true;
+            if ((Input.GetKey(KeyCode.D)))
+            {
+                movementDir = Vector2.one;
+            }
+            else if ((Input.GetKey(KeyCode.A)))
+            {
+                movementDir = new Vector2(-1, 1);
+            }
+            else
+            {
+                movementDir = Vector2.up;
+            }
+        }
+        else if (isLookingDown)
+        {
+            isMoving = true;
+            if ((Input.GetKey(KeyCode.D)))
+            {
+                movementDir = new Vector2(1, -1);
+            }
+            else if ((Input.GetKey(KeyCode.A)))
+            {
+                movementDir = new Vector2(-1, -1);
+            }
+            else
+            {
+                movementDir = Vector2.down;
+            }
+        }
+        else
+        {
+            isMoving = false;
+        }
+    }
+
+    private void LaunchPlayer()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (canLaunch)
+            {
+                //start charging
+                if (!isChargingLaunch)
+                {
+                    playerRb.velocity = Vector2.zero;
+                    playerRb.angularVelocity = 0f;
+                    StartCoroutine(addLaunchCharge());
+                    isChargingLaunch = true;
+                }
+
+                //add impulse based on charge time
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            playerRb.AddForce(movementDir * launchCharge, ForceMode2D.Impulse);
+            isChargingLaunch = false;
+            canLaunch = false;
+            StartCoroutine(rechargeLaunch());
+            launchCharge = 0;
+        }
+    }
+
+    IEnumerator rechargeLaunch()
+    {
+        yield return new WaitForSeconds(launchRechargeDelay);
+        canLaunch = true;
+    }
+
+    IEnumerator attackSequence()
+    {
+        yield return new WaitForSeconds(attackStartDelay);
+        playerShove.SetActive(true);
+        yield return new WaitForSeconds(attackDuration);
+        playerShove.SetActive(false);
+    }
+
+    IEnumerator attackDelay()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(1);
+        canAttack = true;
     }
 }
