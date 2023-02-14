@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.6320754, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.6313726, b: 0.034620013, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -290,9 +290,10 @@ GameObject:
   - component: {fileID: 5380005786800260446}
   - component: {fileID: 5380005786800260441}
   - component: {fileID: 5380005786800260440}
+  - component: {fileID: 1348266134316596230}
   m_Layer: 0
   m_Name: Shover
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,3 +353,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0058257575, y: -0.008742692}
   m_Size: {x: 2.1669867, y: 1.2052792}
   m_Direction: 1
+--- !u!114 &1348266134316596230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380005786800260444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd55c18825eca244f86b2c909a174dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpeed: 15
+  attackWindup: 1
+  attackDelay: 2
