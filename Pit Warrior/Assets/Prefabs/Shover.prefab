@@ -95,9 +95,10 @@ GameObject:
   - component: {fileID: 5380005786086790773}
   - component: {fileID: 5380005786086790775}
   - component: {fileID: 5380005786086790772}
+  - component: {fileID: 4011509343461600806}
   m_Layer: 0
   m_Name: Shove
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,6 +196,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &4011509343461600806
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380005786086790762}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5380005786184429320
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +313,7 @@ GameObject:
   - component: {fileID: 5380005786800260441}
   - component: {fileID: 5380005786800260440}
   - component: {fileID: 1348266134316596230}
+  - component: {fileID: 6475825887193941646}
   m_Layer: 0
   m_Name: Shover
   m_TagString: Enemy
@@ -329,7 +352,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 2.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -365,6 +388,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd55c18825eca244f86b2c909a174dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpeed: 15
+  enemySpeed: 10
   attackWindup: 1
   attackDelay: 2
+  hitDelay: 1
+  impactForce: 10
+--- !u!114 &6475825887193941646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380005786800260444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61e7c76ce7d62547836dcd3ab41bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactForce: 5

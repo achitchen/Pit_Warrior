@@ -11,20 +11,47 @@ public class ShoverMovement : MonoBehaviour
     [SerializeField] int enemySpeed = 5;
     [SerializeField] int attackWindup = 1;
     [SerializeField] int attackDelay = 3;
+    [SerializeField] int hitDelay = 1;
+    [SerializeField] int impactForce = 10;
+
+    private Vector2 impactDirection;
     private float lookDirZ = 0f;
+    private GameObject shoverShove;
+    public bool canShove = true;
     void Start()
     {
         if (player == null)
         {
             player = GameObject.Find("Player");
         }
+        if (shoverShove == null)
+        {
+            shoverShove = transform.Find("Shove").gameObject;
+        }
+        shoverShove.SetActive(false);
         moveDir = getMoveDir();
         enemyRb = GetComponent<Rigidbody2D>();
         lookDirZ = 0f;
-        StartCoroutine(launchAtPlayer());
+        canShove = true;
+        StartCoroutine("launchAtPlayer");
     }
 
     private void Update()
+    {
+        RotateShover();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "PlayerAttack")
+        {
+            impactDirection = (transform.position - collision.transform.position);
+            StartCoroutine(GetHit());
+            canShove = false;
+        }
+    }
+
+    private void RotateShover()
     {
         transform.rotation = Quaternion.Euler(0f, 0f, lookDirZ);
         if (moveDir.x >= 0 && moveDir.y >= 0 && moveDir.x > moveDir.y)
@@ -71,8 +98,24 @@ public class ShoverMovement : MonoBehaviour
     {
         moveDir = getMoveDir();
         yield return new WaitForSeconds(attackWindup);
-        enemyRb.AddForce(moveDir * enemySpeed, ForceMode2D.Impulse);
+        if (canShove)
+        {
+            enemyRb.AddForce(moveDir * enemySpeed, ForceMode2D.Impulse);
+            shoverShove.SetActive(true);
+        }
         yield return new WaitForSeconds(attackDelay);
-        StartCoroutine(launchAtPlayer());
+        shoverShove.SetActive(false);
+        StartCoroutine("launchAtPlayer");
+    }
+
+    public IEnumerator GetHit()
+    {
+        StopCoroutine("launchAtPlayer");
+        enemyRb.AddForce(impactDirection * impactForce, ForceMode2D.Impulse);
+        shoverShove.SetActive(false);
+        yield return new WaitForSeconds(hitDelay);
+        canShove = true;
+        StartCoroutine("launchAtPlayer");
+
     }
 }

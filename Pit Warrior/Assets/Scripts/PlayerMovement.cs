@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] int launchCharge = 0;
     [SerializeField] int maxLaunchCharge = 5;
     [SerializeField] int launchRechargeDelay = 3;
+    [SerializeField] int impactForce = 10;
     [SerializeField] GameObject playerShove;
     [SerializeField] float attackStartDelay = 0.2f;
     [SerializeField] float attackDuration = 0.7f;
@@ -21,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isChargingLaunch = false;
     private bool canLaunch = true;
     private bool canAttack = true;
+    private bool isAttacking = false;
+    private bool isHit = false;
+    private Vector2 impactDirection;
     public Vector2 movementDir;
 
     private Rigidbody2D playerRb;
@@ -34,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
         canLaunch = true;
         canAttack = true;
         isMoving = false;
+        isHit = false;
+        isAttacking = false;
         lookDirZ = 0f;
         movementDir = Vector2.up;
 
@@ -54,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         //Shove mechanic
         if (canAttack && Input.GetKeyDown(KeyCode.Return))
             {
+            isAttacking = true;
             StartCoroutine(attackSequence());
             //set attack delay
             StartCoroutine(attackDelay());
@@ -76,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        if (isMoving && !isChargingLaunch)
+        if (isMoving && !isChargingLaunch && !isHit)
         {
             playerRb.AddForce(movementDir * speed);
         }
@@ -235,6 +242,7 @@ public class PlayerMovement : MonoBehaviour
         playerShove.SetActive(true);
         yield return new WaitForSeconds(attackDuration);
         playerShove.SetActive(false);
+        isAttacking = false;
     }
 
     IEnumerator attackDelay()
@@ -242,5 +250,32 @@ public class PlayerMovement : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(1);
         canAttack = true;
+    }
+
+    IEnumerator RecoverPlayer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canAttack = true;
+        isHit = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyAttack")
+        {
+            if (!isAttacking)
+            {
+                canAttack = false;
+                isHit = true;
+                impactDirection = transform.position - collision.transform.position;
+                playerRb.AddForce(impactDirection * impactForce, ForceMode2D.Impulse);
+                StartCoroutine(RecoverPlayer());
+            }
+        }
+        else if (collision.gameObject.tag == "Border")
+            {
+                impactDirection = (transform.position - collision.transform.position);
+                playerRb.AddForce(impactDirection * (impactForce/2), ForceMode2D.Impulse);
+            }
     }
 }
