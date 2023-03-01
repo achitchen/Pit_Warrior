@@ -8,7 +8,7 @@ public class EnemyPotted : MonoBehaviour
     private SpriteRenderer enemyRenderer;
     private GameObject socket;
     private GameObject filledSocket;
-    [SerializeField] bool isFilled;
+    public bool isFilled;
 
     private void Start()
     {

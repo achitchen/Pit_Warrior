@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canLaunch = true;
     private bool canAttack = true;
     private bool isAttacking = false;
-    private bool isHit = false;
+    public bool isHit = false;
     private Vector2 impactDirection;
     public Vector2 movementDir;
 

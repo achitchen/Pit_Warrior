@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2755147871384414619}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,6 +57,7 @@ MonoBehaviour:
   playerShove: {fileID: 0}
   attackStartDelay: 0.2
   attackDuration: 0.3
+  isHit: 0
   movementDir: {x: 0, y: 0}
 --- !u!50 &2755147871384414618
 Rigidbody2D:
