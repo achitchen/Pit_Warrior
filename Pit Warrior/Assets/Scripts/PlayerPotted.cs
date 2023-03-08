@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerPotted : MonoBehaviour
 {
     [SerializeField] int respawnTime = 2;
-    public Vector3 spawnPosition;
+    [SerializeField] GameObject spawnPoint;
+    private Vector3 spawnPosition;
     private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
@@ -14,12 +15,12 @@ public class PlayerPotted : MonoBehaviour
         {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
-        spawnPosition = GameObject.Find("Player Start").transform.position;
+        spawnPosition = spawnPoint.transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && !GetComponent<EnemyPotted>().isFilled)
         {
             Debug.Log("PlayerPotted");
             GameObject player = collision.gameObject;
@@ -31,6 +32,10 @@ public class PlayerPotted : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().angularVelocity = 0;
                 gameManager.playerLives--;
                 StartCoroutine(PlacePlayer(player));
+            }
+            else
+            {
+                gameManager.gameOver = true;
             }
         }
     }

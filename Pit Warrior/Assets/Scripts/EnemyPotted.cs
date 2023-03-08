@@ -8,7 +8,9 @@ public class EnemyPotted : MonoBehaviour
     private SpriteRenderer enemyRenderer;
     private GameObject socket;
     private GameObject filledSocket;
+    [SerializeField] GameObject crowdSurfLift;
     public bool isFilled;
+    
 
     private void Start()
     {
@@ -26,9 +28,11 @@ public class EnemyPotted : MonoBehaviour
             enemyRenderer = collision.transform.Find("Body").gameObject.GetComponent<SpriteRenderer>();
             socket.SetActive(false);
             filledSocket.SetActive(true);
+            crowdSurfLift.GetComponent<CrowdSurfManager>().arenaEnemies.Remove(collision.gameObject);
             socketRenderer.color = enemyRenderer.color;
             collision.gameObject.SetActive(false);
             isFilled = true;
+            
         }
     }
 }

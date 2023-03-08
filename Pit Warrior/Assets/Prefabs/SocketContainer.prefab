@@ -70,7 +70,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1964178913290565082}
   - component: {fileID: 1964178913290565083}
-  - component: {fileID: 1964178913290565077}
+  - component: {fileID: 1271907215}
+  - component: {fileID: 8034503022872074019}
+  - component: {fileID: 7773855863873251116}
   m_Layer: 0
   m_Name: SocketContainer
   m_TagString: Untagged
@@ -107,8 +109,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2534454e0b4ebae409ef5ea2495e1f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crowdSurfLift: {fileID: 0}
   isFilled: 0
---- !u!61 &1964178913290565077
+--- !u!114 &1271907215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964178913290565080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bbccec7bcee1b045933e0b4a228d657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnTime: 2
+  spawnPoint: {fileID: 0}
+--- !u!61 &8034503022872074019
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +138,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01799351, y: 0.44084072}
+  m_Offset: {x: -0.01902008, y: 0.39941454}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -132,8 +149,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3598701, y: 0.9100323}
+  m_Size: {x: 1.5705919, y: 0.9619608}
   m_EdgeRadius: 0
+--- !u!50 &7773855863873251116
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964178913290565080}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1964178913373698666
 GameObject:
   m_ObjectHideFlags: 0
