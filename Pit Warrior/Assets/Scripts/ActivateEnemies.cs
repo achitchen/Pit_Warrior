@@ -5,10 +5,12 @@ using UnityEngine;
 public class ActivateEnemies : MonoBehaviour
 {
     [SerializeField] List<GameObject> pitEnemies;
+    private bool hasActivated = false;
 
     private void Start()
     {
-        if (pitEnemies.Count != 0)
+        hasActivated = false;
+        if (pitEnemies != null && pitEnemies.Count != 0)
         {
             foreach (GameObject pitEnemy in pitEnemies)
             {
@@ -19,7 +21,7 @@ public class ActivateEnemies : MonoBehaviour
 
     public void ActivateAllEnemies()
     {
-        if (pitEnemies.Count != 0)
+        if (pitEnemies != null && pitEnemies.Count != 0)
         {
             foreach (GameObject pitEnemy in pitEnemies)
             {
@@ -30,9 +32,10 @@ public class ActivateEnemies : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !hasActivated)
         {
             ActivateAllEnemies();
+            hasActivated = true;
         }
     }
 }
