@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3830829222147596784}
   - component: {fileID: 1536420499272446988}
   - component: {fileID: 7953628795556398988}
-  - component: {fileID: 2116942382573940445}
+  - component: {fileID: 5974123127743792909}
   m_Layer: 0
   m_Name: Player Start 1
   m_TagString: Untagged
@@ -70,7 +70,7 @@ MonoBehaviour:
   pitEnemies:
   - {fileID: 0}
   - {fileID: 0}
---- !u!61 &2116942382573940445
+--- !u!61 &5974123127743792909
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

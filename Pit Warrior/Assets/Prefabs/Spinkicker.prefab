@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinSpeed: 300
   hitDelay: 1
-  impactForce: 10
+  impactForce: 13
   isHit: 0
 --- !u!114 &417001318
 MonoBehaviour:

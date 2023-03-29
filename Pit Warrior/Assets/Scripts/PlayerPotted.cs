@@ -8,12 +8,14 @@ public class PlayerPotted : MonoBehaviour
     [SerializeField] GameObject spawnPoint;
     private Vector3 spawnPosition;
     private GameManager gameManager;
+    private UIHandler uiHandler;
     // Start is called before the first frame update
     void Start()
     {
         if (gameManager == null)
         {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            uiHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
         }
         spawnPosition = spawnPoint.transform.position;
     }
@@ -31,11 +33,13 @@ public class PlayerPotted : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 player.GetComponent<Rigidbody2D>().angularVelocity = 0;
                 gameManager.playerLives--;
+                uiHandler.livesText.text = "Teeth remaining: " + gameManager.playerLives.ToString();
                 StartCoroutine(PlacePlayer(player));
             }
             else
             {
                 gameManager.gameOver = true;
+                uiHandler.gameOverPanel.SetActive(true);
             }
         }
     }

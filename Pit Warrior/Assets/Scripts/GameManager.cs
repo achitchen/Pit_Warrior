@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKey(KeyCode.Return))
             {
                 Time.timeScale = 1;
+                GetComponent<UIHandler>().gameOverPanel.SetActive(false);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }

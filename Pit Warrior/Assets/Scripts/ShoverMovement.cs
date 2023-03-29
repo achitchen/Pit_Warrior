@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShoverMovement : MonoBehaviour
 {
-    private GameObject player;
+    public GameObject player;
     private Rigidbody2D enemyRb;
     Vector2 moveDir;
 
@@ -33,7 +33,6 @@ public class ShoverMovement : MonoBehaviour
         enemyRb = GetComponent<Rigidbody2D>();
         lookDirZ = 0f;
         canShove = true;
-        StartCoroutine("launchAtPlayer");
     }
 
     private void Update()
@@ -43,7 +42,7 @@ public class ShoverMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "PlayerAttack")
+        if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
             impactDirection = (transform.position - collision.transform.position);
             StartCoroutine(GetHit());
@@ -94,7 +93,7 @@ public class ShoverMovement : MonoBehaviour
         return playerDirection;
     }
 
-    IEnumerator launchAtPlayer()
+    public IEnumerator launchAtPlayer()
     {
         moveDir = getMoveDir();
         yield return new WaitForSeconds(attackWindup);

@@ -26,6 +26,14 @@ public class ActivateEnemies : MonoBehaviour
             foreach (GameObject pitEnemy in pitEnemies)
             {
                 pitEnemy.gameObject.SetActive(true);
+                if (pitEnemy.name == "Shover" || pitEnemy.name == "Shover (1)")
+                {
+                    if (pitEnemy.GetComponent<ShoverMovement>().player == null)
+                    {
+                        pitEnemy.GetComponent<ShoverMovement>().player = GameObject.Find("Player");
+                    }
+                    pitEnemy.GetComponent<ShoverMovement>().StartCoroutine("launchAtPlayer");
+                }
             }
         }
     }

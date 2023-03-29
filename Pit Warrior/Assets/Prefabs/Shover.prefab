@@ -388,11 +388,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd55c18825eca244f86b2c909a174dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   enemySpeed: 10
   attackWindup: 1
   attackDelay: 2
   hitDelay: 1
-  impactForce: 10
+  impactForce: 13
+  canShove: 1
 --- !u!114 &6475825887193941646
 MonoBehaviour:
   m_ObjectHideFlags: 0
