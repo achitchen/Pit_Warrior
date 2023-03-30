@@ -16,6 +16,7 @@ public class EnemyPotted : MonoBehaviour
 
     private void Start()
     {
+        gameObject.tag = "Untagged";
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uIHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
         socket = transform.Find("Socket").gameObject;
@@ -39,6 +40,7 @@ public class EnemyPotted : MonoBehaviour
             enemyRenderer = collision.transform.Find("Body").gameObject.GetComponent<SpriteRenderer>();
             socket.SetActive(false);
             filledSocket.SetActive(true);
+            gameObject.tag = "Border";
             crowdSurfLift.GetComponent<CrowdSurfManager>().arenaEnemies.Remove(collision.gameObject);
             socketRenderer.color = enemyRenderer.color;
             collision.gameObject.SetActive(false);
