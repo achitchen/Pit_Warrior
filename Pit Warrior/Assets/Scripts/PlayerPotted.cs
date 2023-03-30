@@ -30,6 +30,7 @@ public class PlayerPotted : MonoBehaviour
             {
                 GetComponent<EnemyPotted>().isFilled = true;
                 player.GetComponent<PlayerMovement>().isHit = true;
+                player.GetComponent<PlayerMovement>().isRespawning = true;
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 player.GetComponent<Rigidbody2D>().angularVelocity = 0;
                 gameManager.playerLives--;
@@ -52,5 +53,6 @@ public class PlayerPotted : MonoBehaviour
         player.transform.position = spawnPosition;
         GetComponent<EnemyPotted>().isFilled = false;
         player.GetComponent<PlayerMovement>().isHit = false;
+        player.GetComponent<PlayerMovement>().isRespawning = false;
     }
 }

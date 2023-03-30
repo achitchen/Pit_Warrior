@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private GameManager gameManager;
     private UIHandler uIHandler;
     public bool isHit = false;
+    public bool isRespawning = false;
     private Vector2 impactDirection;
     public Vector2 movementDir;
 
@@ -268,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "EnemyAttack")
         {
-            if (!isAttacking)
+            if (!isAttacking && !isRespawning)
             {
                 canAttack = false;
                 isHit = true;
@@ -281,8 +282,11 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Border")
             {
-                impactDirection = (transform.position - collision.transform.position);
-                playerRb.AddForce(impactDirection * (impactForce/2), ForceMode2D.Impulse);
+            if (!isRespawning)
+                {
+                    impactDirection = (transform.position - collision.transform.position);
+                    playerRb.AddForce(impactDirection * (impactForce / 2), ForceMode2D.Impulse);
+                }
             }
     }
 }

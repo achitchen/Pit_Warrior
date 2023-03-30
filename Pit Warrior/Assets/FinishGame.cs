@@ -9,6 +9,7 @@ public class FinishGame : MonoBehaviour
     
     void Start()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow, 60);
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uIHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
     }
