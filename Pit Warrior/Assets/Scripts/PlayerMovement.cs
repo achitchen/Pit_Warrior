@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private bool canLaunch = true;
     private bool canAttack = true;
     private bool isAttacking = false;
+    private GameManager gameManager;
+    private UIHandler uIHandler;
     public bool isHit = false;
     private Vector2 impactDirection;
     public Vector2 movementDir;
@@ -50,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
             playerShove = transform.Find("Shove").gameObject;
             playerShove.SetActive(false);
         }
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        uIHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
     }
 
     void Update()
@@ -267,6 +272,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 canAttack = false;
                 isHit = true;
+                gameManager.scoreMultiplier = 1;
+                uIHandler.multiplierText.text = "";
                 impactDirection = transform.position - collision.transform.position;
                 playerRb.AddForce(impactDirection * impactForce, ForceMode2D.Impulse);
                 StartCoroutine(RecoverPlayer());

@@ -33,6 +33,8 @@ public class PlayerPotted : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 player.GetComponent<Rigidbody2D>().angularVelocity = 0;
                 gameManager.playerLives--;
+                gameManager.scoreMultiplier = 1;
+                uiHandler.multiplierText.text = "";
                 uiHandler.livesText.text = "Teeth remaining: " + gameManager.playerLives.ToString();
                 StartCoroutine(PlacePlayer(player));
             }

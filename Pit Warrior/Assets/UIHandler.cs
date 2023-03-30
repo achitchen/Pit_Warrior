@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour
 {
-    [SerializeField] TMP_Text scoreText;
+    public TMP_Text scoreText;
     public GameObject gameOverPanel;
     public TMP_Text livesText;
+    public TMP_Text multiplierText;
+    public GameObject pausePanel;
+    public GameObject gameFinishedPanel;
     private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
@@ -16,10 +19,12 @@ public class UIHandler : MonoBehaviour
         if (gameManager == null)
         {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-            scoreText.text = "needs to be set";
-            livesText.text = "Teeth remaining: " + gameManager.playerLives.ToString();
-            gameOverPanel.SetActive(false);
-
         }
+        scoreText.text = "Score: " + 0;
+        livesText.text = "Teeth remaining: " + gameManager.playerLives.ToString();
+        multiplierText.text = "";
+        gameOverPanel.SetActive(false);
+        pausePanel.SetActive(false);
+        gameFinishedPanel.SetActive(false);
     }
 }
