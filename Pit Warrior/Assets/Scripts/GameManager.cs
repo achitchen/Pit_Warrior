@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public bool gameOver = false;
     public bool gamePaused = false;
     public bool gameFinished = false;
+    public AudioSource musicSource;
+    [SerializeField] AudioClip bgMusic;
 
     private void Start()
     {
@@ -20,6 +22,14 @@ public class GameManager : MonoBehaviour
         gamePaused = false;
         gameFinished = false;
         Time.timeScale = 1;
+        if (musicSource == null) {
+            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.clip = bgMusic;
+            musicSource.volume = 0.7f;
+            musicSource.loop = false;
+        }
+        musicSource.Play();
+        StartCoroutine("StartMusic");
     }
 
     private void Update()
@@ -34,6 +44,8 @@ public class GameManager : MonoBehaviour
                 playerLives = 3;
                 score = 0;
                 gameOver = false;
+                StopCoroutine("StartMusic");
+                musicSource.Stop();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
@@ -68,6 +80,8 @@ public class GameManager : MonoBehaviour
             {
                 gameFinished = false;
                 Time.timeScale = 1;
+                StopCoroutine("StartMusic");
+                musicSource.Stop();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             else if (Input.GetKey(KeyCode.Escape))
@@ -75,5 +89,12 @@ public class GameManager : MonoBehaviour
                 Application.Quit();
             }
         }
+    }
+
+    IEnumerator StartMusic()
+    {
+        yield return new WaitForSeconds(160);
+        musicSource.Play();
+        StartCoroutine("StartMusic");
     }
 }
