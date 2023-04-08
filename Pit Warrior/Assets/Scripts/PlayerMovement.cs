@@ -61,8 +61,11 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         RotatePlayer();
-        LaunchPlayer();
-        DetermineDirection();
+        if (!isHit)
+        {
+            LaunchPlayer();
+            DetermineDirection();
+        }
         //Shove mechanic
         if (canAttack && Input.GetKeyDown(KeyCode.Return))
             {

@@ -7,6 +7,8 @@ public class CrowdSurfManager : MonoBehaviour
     public List<GameObject> arenaEnemies;
     private GameObject pitWall;
     private GameObject crowdSurfPoint;
+    private AudioSource crowdSurfAudio;
+    [SerializeField] AudioClip[] crowdSurfClips;
     private bool hasTransformed = false;
     void Start()
     {
@@ -15,6 +17,8 @@ public class CrowdSurfManager : MonoBehaviour
         crowdSurfPoint = transform.Find("Crowdsurf").gameObject;
         crowdSurfPoint.SetActive(false);
         hasTransformed = false;
+        crowdSurfAudio = gameObject.AddComponent<AudioSource>();
+        crowdSurfAudio.loop = false;
     }
 
     void Update()
@@ -31,5 +35,14 @@ public class CrowdSurfManager : MonoBehaviour
         hasTransformed = true;
         pitWall.SetActive(false);
         crowdSurfPoint.SetActive(true);
+        crowdSurfAudio.PlayOneShot(ChooseSound());
+    }
+
+    private AudioClip ChooseSound()
+    {
+        AudioClip chosenSound;
+        int index = Random.Range(0, crowdSurfClips.Length - 1);
+        chosenSound = crowdSurfClips[index];
+        return chosenSound;
     }
 }

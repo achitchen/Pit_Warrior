@@ -313,6 +313,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arenaEnemies: []
+  crowdSurfClips:
+  - {fileID: 8300000, guid: 3f59404d768fe0342a591e932787e0ed, type: 3}
+  - {fileID: 8300000, guid: 0694fc2851e0d2346b93bd65085d9dcd, type: 3}
+  - {fileID: 8300000, guid: bc289d87499e6894aa721604e68e9151, type: 3}
 --- !u!1001 &2676707298545455189
 PrefabInstance:
   m_ObjectHideFlags: 0
