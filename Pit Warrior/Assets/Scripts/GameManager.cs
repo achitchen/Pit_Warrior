@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     public bool gamePaused = false;
     public bool gameFinished = false;
     public AudioSource musicSource;
+    public AudioSource miscSoundsSource;
     [SerializeField] AudioClip bgMusic;
+    [SerializeField] AudioClip startSound;
 
     private void Start()
     {
@@ -25,10 +27,17 @@ public class GameManager : MonoBehaviour
         if (musicSource == null) {
             musicSource = gameObject.AddComponent<AudioSource>();
             musicSource.clip = bgMusic;
+            musicSource.volume = 0.6f;
+            musicSource.loop = false;
+        }
+        if (miscSoundsSource == null)
+        {
+            miscSoundsSource = gameObject.AddComponent<AudioSource>();
             musicSource.volume = 0.7f;
             musicSource.loop = false;
         }
         musicSource.Play();
+        miscSoundsSource.PlayOneShot(startSound);
         StartCoroutine("StartMusic");
     }
 
@@ -50,7 +59,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!gamePaused)
+        if (!gamePaused && !gameOver)
         {
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -59,7 +68,7 @@ public class GameManager : MonoBehaviour
                 GetComponent<UIHandler>().pausePanel.SetActive(true);
             }
         }
-        else
+        else if (gamePaused)
         {
             if (Input.GetKey(KeyCode.Space))
             {

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crowdSurfLift: {fileID: 0}
+  enemyPottedSound: {fileID: 8300000, guid: 1b0671f03df0de94f9bbfe660f9f1fa9, type: 3}
   isFilled: 0
 --- !u!114 &1271907215
 MonoBehaviour:
@@ -125,6 +126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTime: 2
   spawnPoint: {fileID: 0}
+  gameOverSound: {fileID: 8300000, guid: 2add0d496e894894bbaa4fa0635b2cd8, type: 3}
+  playerPottedSound: {fileID: 8300000, guid: ab67119bca3021c468a093ba6a3e9347, type: 3}
 --- !u!61 &8034503022872074019
 BoxCollider2D:
   m_ObjectHideFlags: 0

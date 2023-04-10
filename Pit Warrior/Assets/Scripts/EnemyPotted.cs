@@ -9,6 +9,7 @@ public class EnemyPotted : MonoBehaviour
     private GameObject socket;
     private GameObject filledSocket;
     [SerializeField] GameObject crowdSurfLift;
+    [SerializeField] AudioClip enemyPottedSound;
     private GameManager gameManager;
     private UIHandler uIHandler;
     public bool isFilled;
@@ -30,6 +31,7 @@ public class EnemyPotted : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy" && !isFilled)
         {
+            gameManager.miscSoundsSource.PlayOneShot(enemyPottedSound, 0.7f);
             gameManager.score += 100 * gameManager.scoreMultiplier;
             uIHandler.scoreText.text = "Score: " + gameManager.score;
             if (gameManager.scoreMultiplier < 5)

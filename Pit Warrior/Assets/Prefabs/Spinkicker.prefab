@@ -90,6 +90,9 @@ MonoBehaviour:
   spinSpeed: 300
   hitDelay: 1
   impactForce: 13
+  hitSounds:
+  - {fileID: 8300000, guid: c6b32700e5c3f184c99aafe91dedcfd7, type: 3}
+  - {fileID: 8300000, guid: 24a3a84775dad984688a88e66d43ecda, type: 3}
   isHit: 0
 --- !u!114 &417001318
 MonoBehaviour:
@@ -104,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactForce: 5
+  bounceSound: {fileID: 8300000, guid: f9b476e74b25a81408f6bc5761f0f151, type: 3}
 --- !u!1 &1002227119074999758
 GameObject:
   m_ObjectHideFlags: 0

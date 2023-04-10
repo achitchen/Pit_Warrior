@@ -7,12 +7,14 @@ public class SpinScript : MonoBehaviour
     [SerializeField] int spinSpeed = 30;
     [SerializeField] int hitDelay = 1;
     [SerializeField] float impactForce = 5;
+    [SerializeField] AudioClip[] hitSounds;
     public bool isHit;
     private Vector2 impactDirection;
     private Vector2 moveDir;
     private Rigidbody2D enemyRb;
     private GameObject enemyShove;
     private GameObject player;
+    private AudioSource enemySoundSource;
 
     private void Start()
     {
@@ -28,6 +30,12 @@ public class SpinScript : MonoBehaviour
         if (enemyShove == null)
         {
             enemyShove = transform.Find("Shove").gameObject;
+        }
+        if (enemySoundSource == null)
+        {
+            enemySoundSource = gameObject.AddComponent<AudioSource>();
+            enemySoundSource.loop = false;
+            enemySoundSource.volume = 0.7f;
         }
         else enemyShove.SetActive(true);
     }
@@ -53,6 +61,9 @@ public class SpinScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
+            enemySoundSource.pitch = Random.Range(0.7f, 1.2f);
+            int index = Random.Range(0, 1);
+            enemySoundSource.PlayOneShot(hitSounds[index], 1.4f);
             impactDirection = (transform.position - collision.transform.position);
             isHit = true;
             enemyShove.SetActive(false);

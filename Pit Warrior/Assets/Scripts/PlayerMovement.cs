@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject playerShove;
     [SerializeField] float attackStartDelay = 0.2f;
     [SerializeField] float attackDuration = 0.7f;
+    [SerializeField] AudioClip bounceSound;
+    [SerializeField] AudioClip hitSound;
+    [SerializeField] AudioClip[] attackSounds;
+    private AudioSource playerSoundSource;
     private bool isMoving = false;
     private bool isLookingLeft = false;
     private bool isLookingRight = false;
@@ -53,7 +56,11 @@ public class PlayerMovement : MonoBehaviour
             playerShove = transform.Find("Shove").gameObject;
             playerShove.SetActive(false);
         }
-
+        if (playerSoundSource == null)
+        {
+            playerSoundSource = gameObject.AddComponent<AudioSource>();
+            playerSoundSource.loop = false;
+        }
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uIHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
     }
@@ -249,6 +256,9 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(attackStartDelay);
         playerShove.SetActive(true);
+        int index = Random.Range(0, attackSounds.Length - 1);
+        playerSoundSource.pitch = Random.Range(0.9f, 1.1f);
+        playerSoundSource.PlayOneShot(attackSounds[index], 0.5f);
         yield return new WaitForSeconds(attackDuration);
         playerShove.SetActive(false);
         isAttacking = false;
@@ -274,6 +284,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isAttacking && !isRespawning)
             {
+                playerSoundSource.pitch = Random.Range(0.9f, 1.2f);
+                playerSoundSource.PlayOneShot(hitSound, 0.5f);
                 canAttack = false;
                 isHit = true;
                 gameManager.scoreMultiplier = 1;
@@ -287,6 +299,7 @@ public class PlayerMovement : MonoBehaviour
             {
             if (!isRespawning)
                 {
+                    playerSoundSource.PlayOneShot(bounceSound, 0.6f);
                     impactDirection = (transform.position - collision.transform.position);
                     playerRb.AddForce(impactDirection * (impactForce / 2), ForceMode2D.Impulse);
                 }

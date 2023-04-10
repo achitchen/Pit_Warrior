@@ -53,11 +53,19 @@ MonoBehaviour:
   launchCharge: 0
   maxLaunchCharge: 25
   launchRechargeDelay: 3
-  impactForce: 10
+  impactForce: 12
   playerShove: {fileID: 0}
   attackStartDelay: 0.2
   attackDuration: 0.3
+  bounceSound: {fileID: 8300000, guid: f9b476e74b25a81408f6bc5761f0f151, type: 3}
+  hitSound: {fileID: 8300000, guid: 141c520b7f9cb6d4a900f00457638a55, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: 4d41e293076fb964495be517963cb534, type: 3}
+  - {fileID: 8300000, guid: 0330086f8a453714eaea2f991530a53b, type: 3}
+  - {fileID: 8300000, guid: 9bee96832696bb149a696a7558e4e9b7, type: 3}
+  - {fileID: 8300000, guid: b70c20091ec549d4894634dad0eb4407, type: 3}
   isHit: 0
+  isRespawning: 0
   movementDir: {x: 0, y: 0}
 --- !u!50 &2755147871384414618
 Rigidbody2D:

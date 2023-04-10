@@ -13,26 +13,17 @@ public class ShoverMovement : MonoBehaviour
     [SerializeField] int attackDelay = 3;
     [SerializeField] int hitDelay = 1;
     [SerializeField] int impactForce = 10;
-
+    [SerializeField] AudioClip[] hitSounds;
+    [SerializeField] AudioClip enemyAttackSound;
+    private AudioSource enemySoundSource;
+    private AudioSource bleghSoundSource;
     private Vector2 impactDirection;
     private float lookDirZ = 0f;
     private GameObject shoverShove;
     public bool canShove = true;
     void Start()
     {
-        if (player == null)
-        {
-            player = GameObject.Find("Player");
-        }
-        if (shoverShove == null)
-        {
-            shoverShove = transform.Find("Shove").gameObject;
-        }
-        shoverShove.SetActive(false);
-        moveDir = getMoveDir();
-        enemyRb = GetComponent<Rigidbody2D>();
-        lookDirZ = 0f;
-        canShove = true;
+        Activate();
     }
 
     private void Update()
@@ -44,8 +35,11 @@ public class ShoverMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
+            enemySoundSource.pitch = Random.Range(0.9f, 1.1f);
+            int index = Random.Range(0, 1);
+            enemySoundSource.PlayOneShot(hitSounds[index], 1.4f);
             impactDirection = (transform.position - collision.transform.position);
-            StartCoroutine(GetHit());
+            StartCoroutine("GetHit");
             canShove = false;
         }
     }
@@ -89,6 +83,10 @@ public class ShoverMovement : MonoBehaviour
 
     private Vector2 getMoveDir()
     {
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
         Vector2 playerDirection = (player.transform.position - transform.position).normalized;
         return playerDirection;
     }
@@ -96,6 +94,8 @@ public class ShoverMovement : MonoBehaviour
     public IEnumerator launchAtPlayer()
     {
         moveDir = getMoveDir();
+        bleghSoundSource.pitch = Random.Range(0.9f, 1.1f);
+        bleghSoundSource.Play();
         yield return new WaitForSeconds(attackWindup);
         if (canShove)
         {
@@ -110,11 +110,44 @@ public class ShoverMovement : MonoBehaviour
     public IEnumerator GetHit()
     {
         StopCoroutine("launchAtPlayer");
+        bleghSoundSource.Stop();
         enemyRb.AddForce(impactDirection * impactForce, ForceMode2D.Impulse);
         shoverShove.SetActive(false);
         yield return new WaitForSeconds(hitDelay);
         canShove = true;
         StartCoroutine("launchAtPlayer");
 
+    }
+
+    public void Activate()
+    {
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+        if (shoverShove == null)
+        {
+            shoverShove = transform.Find("Shove").gameObject;
+        }
+        if (enemySoundSource == null)
+        {
+            enemySoundSource = gameObject.AddComponent<AudioSource>();
+            enemySoundSource.loop = false;
+            enemySoundSource.volume = 0.7f;
+        }
+        if (bleghSoundSource == null)
+        {
+            bleghSoundSource = gameObject.AddComponent<AudioSource>();
+            bleghSoundSource.loop = false;
+            bleghSoundSource.volume = 0.7f;
+            bleghSoundSource.clip = enemyAttackSound;
+        }
+        shoverShove.SetActive(false);
+        moveDir = getMoveDir();
+        enemyRb = GetComponent<Rigidbody2D>();
+        lookDirZ = 0f;
+        canShove = true;
+
+        StartCoroutine("launchAtPlayer");
     }
 }

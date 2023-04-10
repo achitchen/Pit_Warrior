@@ -6,6 +6,8 @@ public class PlayerPotted : MonoBehaviour
 {
     [SerializeField] int respawnTime = 2;
     [SerializeField] GameObject spawnPoint;
+    [SerializeField] AudioClip gameOverSound;
+    [SerializeField] AudioClip playerPottedSound;
     private Vector3 spawnPosition;
     private GameManager gameManager;
     private UIHandler uiHandler;
@@ -28,6 +30,7 @@ public class PlayerPotted : MonoBehaviour
             GameObject player = collision.gameObject;
             if (gameManager.playerLives > 0)
             {
+                gameManager.miscSoundsSource.PlayOneShot(playerPottedSound, 1.5f);
                 GetComponent<EnemyPotted>().isFilled = true;
                 player.GetComponent<PlayerMovement>().isHit = true;
                 player.GetComponent<PlayerMovement>().isRespawning = true;
@@ -42,6 +45,7 @@ public class PlayerPotted : MonoBehaviour
             else
             {
                 gameManager.gameOver = true;
+                gameManager.miscSoundsSource.PlayOneShot(gameOverSound, 0.8f);
                 uiHandler.gameOverPanel.SetActive(true);
             }
         }

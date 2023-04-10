@@ -394,6 +394,10 @@ MonoBehaviour:
   attackDelay: 2
   hitDelay: 1
   impactForce: 13
+  hitSounds:
+  - {fileID: 8300000, guid: c6b32700e5c3f184c99aafe91dedcfd7, type: 3}
+  - {fileID: 8300000, guid: 24a3a84775dad984688a88e66d43ecda, type: 3}
+  enemyAttackSound: {fileID: 8300000, guid: 8c1ca7c4b8fe26b4c82774dd51c0b223, type: 3}
   canShove: 1
 --- !u!114 &6475825887193941646
 MonoBehaviour:
@@ -408,3 +412,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactForce: 5
+  bounceSound: {fileID: 8300000, guid: f9b476e74b25a81408f6bc5761f0f151, type: 3}

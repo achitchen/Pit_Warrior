@@ -1992,7 +1992,9 @@ MonoBehaviour:
   gamePaused: 0
   gameFinished: 0
   musicSource: {fileID: 0}
+  miscSoundsSource: {fileID: 0}
   bgMusic: {fileID: 8300000, guid: c373c091fc80acb488690517b5722cab, type: 3}
+  startSound: {fileID: 8300000, guid: 6af5b7ab4074a874f90b443c5f5bea9f, type: 3}
 --- !u!4 &192267884
 Transform:
   m_ObjectHideFlags: 0
@@ -19034,10 +19036,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2755147871384414620, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
-      propertyPath: impactForce
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 2755147871384414621, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
       propertyPath: m_RootOrder
       value: 3
