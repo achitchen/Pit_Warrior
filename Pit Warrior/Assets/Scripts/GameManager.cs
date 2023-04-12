@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource miscSoundsSource;
     [SerializeField] AudioClip bgMusic;
-    [SerializeField] AudioClip startSound;
 
     private void Start()
     {
@@ -37,7 +36,6 @@ public class GameManager : MonoBehaviour
             musicSource.loop = false;
         }
         musicSource.Play();
-        miscSoundsSource.PlayOneShot(startSound);
         StartCoroutine("StartMusic");
     }
 

@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioClip bounceSound;
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip[] attackSounds;
+    [SerializeField] ParticleSystem footstepsParticles;
     private AudioSource playerSoundSource;
     private bool isMoving = false;
     private bool isLookingLeft = false;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canLaunch = true;
     private bool canAttack = true;
     private bool isAttacking = false;
+    private bool hasFootsteps = false;
     private GameManager gameManager;
     private UIHandler uIHandler;
     public bool isHit = false;
@@ -73,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
             LaunchPlayer();
             DetermineDirection();
         }
+
         //Shove mechanic
         if (canAttack && Input.GetKeyDown(KeyCode.Return))
             {
@@ -101,7 +104,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMoving && !isChargingLaunch && !isHit)
         {
+            if (!hasFootsteps)
+            {
+                footstepsParticles.Play();
+                hasFootsteps = true;
+            }
             playerRb.AddForce(movementDir * speed);
+        }
+        else if (hasFootsteps)
+        {
+            StopFootsteps();
         }
     }
 
@@ -284,6 +296,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isAttacking && !isRespawning)
             {
+                StopFootsteps();
                 playerSoundSource.pitch = Random.Range(0.9f, 1.2f);
                 playerSoundSource.PlayOneShot(hitSound, 0.5f);
                 canAttack = false;
@@ -299,10 +312,20 @@ public class PlayerMovement : MonoBehaviour
             {
             if (!isRespawning)
                 {
-                    playerSoundSource.PlayOneShot(bounceSound, 0.6f);
+                StopFootsteps();
+                playerSoundSource.PlayOneShot(bounceSound, 0.6f);
                     impactDirection = (transform.position - collision.transform.position);
                     playerRb.AddForce(impactDirection * (impactForce / 2), ForceMode2D.Impulse);
                 }
             }
+    }
+
+    public void StopFootsteps()
+    {
+        if (hasFootsteps)
+        {
+            footstepsParticles.Stop();
+            hasFootsteps = false;
+        }
     }
 }

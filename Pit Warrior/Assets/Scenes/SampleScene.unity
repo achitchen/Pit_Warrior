@@ -1994,7 +1994,6 @@ MonoBehaviour:
   musicSource: {fileID: 0}
   miscSoundsSource: {fileID: 0}
   bgMusic: {fileID: 8300000, guid: c373c091fc80acb488690517b5722cab, type: 3}
-  startSound: {fileID: 8300000, guid: 6af5b7ab4074a874f90b443c5f5bea9f, type: 3}
 --- !u!4 &192267884
 Transform:
   m_ObjectHideFlags: 0
@@ -16092,6 +16091,11 @@ PrefabInstance:
       objectReference: {fileID: 412462524}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32ec990e2aa830a498a690a5ce13e015, type: 3}
+--- !u!198 &1838028867 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+  m_PrefabInstance: {fileID: 2755147871583520678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1858242564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19036,6 +19040,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: simulationSpeed
+      value: 3.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: ShapeModule.arc.spread
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838028867, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2755147871384414620, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
+      propertyPath: footstepsParticles
+      value: 
+      objectReference: {fileID: 1838028867}
     - target: {fileID: 2755147871384414621, guid: bbbe527751d5cb94a88135d4003f417f, type: 3}
       propertyPath: m_RootOrder
       value: 3
