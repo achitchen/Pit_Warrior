@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip[] attackSounds;
     [SerializeField] ParticleSystem footstepsParticles;
+    [SerializeField] ParticleSystem bloodParticles;
+    [SerializeField] ParticleSystem dustParticles;
     private AudioSource playerSoundSource;
     private bool isMoving = false;
     private bool isLookingLeft = false;
@@ -296,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isAttacking && !isRespawning)
             {
+                bloodParticles.Play();
                 StopFootsteps();
                 playerSoundSource.pitch = Random.Range(0.9f, 1.2f);
                 playerSoundSource.PlayOneShot(hitSound, 0.5f);
@@ -312,10 +315,11 @@ public class PlayerMovement : MonoBehaviour
             {
             if (!isRespawning)
                 {
+                dustParticles.Play();
                 StopFootsteps();
                 playerSoundSource.PlayOneShot(bounceSound, 0.6f);
-                    impactDirection = (transform.position - collision.transform.position);
-                    playerRb.AddForce(impactDirection * (impactForce / 2), ForceMode2D.Impulse);
+                impactDirection = (transform.position - collision.transform.position);
+                playerRb.AddForce(impactDirection * (impactForce / 2), ForceMode2D.Impulse);
                 }
             }
     }

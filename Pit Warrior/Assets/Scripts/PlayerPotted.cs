@@ -28,14 +28,15 @@ public class PlayerPotted : MonoBehaviour
         {
             Debug.Log("PlayerPotted");
             GameObject player = collision.gameObject;
+            player.GetComponent<PlayerMovement>().StopAllCoroutines();
+            player.GetComponent<PlayerMovement>().isHit = true;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            player.GetComponent<Rigidbody2D>().angularVelocity = 0;
             if (gameManager.playerLives > 0)
             {
                 gameManager.miscSoundsSource.PlayOneShot(playerPottedSound, 1.5f);
                 GetComponent<EnemyPotted>().isFilled = true;
-                player.GetComponent<PlayerMovement>().isHit = true;
                 player.GetComponent<PlayerMovement>().isRespawning = true;
-                player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                player.GetComponent<Rigidbody2D>().angularVelocity = 0;
                 gameManager.playerLives--;
                 gameManager.scoreMultiplier = 1;
                 uiHandler.multiplierText.text = "";
@@ -54,6 +55,7 @@ public class PlayerPotted : MonoBehaviour
     IEnumerator PlacePlayer(GameObject player)
     {
         yield return new WaitForSeconds(respawnTime);
+        player.GetComponent<PlayerMovement>().StartCoroutine("RecoverPlayer");
         player.transform.position = spawnPosition;
         GetComponent<EnemyPotted>().isFilled = false;
         player.GetComponent<PlayerMovement>().isHit = false;

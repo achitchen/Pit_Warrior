@@ -338,6 +338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 7332445915225607781, guid: 4db9500a15ad3bc4f94a0834b7fe0328, type: 3}
+      propertyPath: m_TagString
+      value: Border
+      objectReference: {fileID: 0}
     - target: {fileID: 7332445915225607783, guid: 4db9500a15ad3bc4f94a0834b7fe0328, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -8,6 +8,7 @@ public class SpinScript : MonoBehaviour
     [SerializeField] int hitDelay = 1;
     [SerializeField] float impactForce = 5;
     [SerializeField] AudioClip[] hitSounds;
+    [SerializeField] ParticleSystem bloodParticles;
     public bool isHit;
     private Vector2 impactDirection;
     private Vector2 moveDir;
@@ -62,6 +63,7 @@ public class SpinScript : MonoBehaviour
         if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
             enemySoundSource.pitch = Random.Range(0.7f, 1.2f);
+            bloodParticles.Play();
             int index = Random.Range(0, 1);
             enemySoundSource.PlayOneShot(hitSounds[index], 1.4f);
             impactDirection = (transform.position - collision.transform.position);

@@ -15,6 +15,7 @@ public class ShoverMovement : MonoBehaviour
     [SerializeField] int impactForce = 10;
     [SerializeField] AudioClip[] hitSounds;
     [SerializeField] AudioClip enemyAttackSound;
+    [SerializeField] ParticleSystem bloodParticles;
     private AudioSource enemySoundSource;
     private AudioSource bleghSoundSource;
     private Vector2 impactDirection;
@@ -36,9 +37,11 @@ public class ShoverMovement : MonoBehaviour
         if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
             enemySoundSource.pitch = Random.Range(0.9f, 1.1f);
+            bloodParticles.Play();
             int index = Random.Range(0, 1);
             enemySoundSource.PlayOneShot(hitSounds[index], 1.4f);
             impactDirection = (transform.position - collision.transform.position);
+            StopAllCoroutines();
             StartCoroutine("GetHit");
             canShove = false;
         }
@@ -109,7 +112,6 @@ public class ShoverMovement : MonoBehaviour
 
     public IEnumerator GetHit()
     {
-        StopCoroutine("launchAtPlayer");
         bleghSoundSource.Stop();
         enemyRb.AddForce(impactDirection * impactForce, ForceMode2D.Impulse);
         shoverShove.SetActive(false);

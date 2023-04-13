@@ -6,6 +6,7 @@ public class BounceScript : MonoBehaviour
 {
     [SerializeField] int impactForce = 30;
     [SerializeField] AudioClip bounceSound;
+    [SerializeField] ParticleSystem dustParticles;
     private Vector2 impactDirection;
     private Rigidbody2D enemyRb;
     private GameManager gameManager;
@@ -30,6 +31,7 @@ public class BounceScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Border")
         {
+            dustParticles.Play();
             gameManager.miscSoundsSource.PlayOneShot(bounceSound, 0.6f);
             impactDirection = (transform.position - collision.transform.position);
             enemyRb.AddForce(impactDirection * impactForce, ForceMode2D.Impulse);
@@ -39,14 +41,14 @@ public class BounceScript : MonoBehaviour
                 if (!isHit)
                 {
                     shoverMovement.canShove = false;
-                    shoverMovement.StopCoroutine("launchAtPlayer");
                     shoverMovement.StartCoroutine("GetHit");
                     isHit = true;
                     StartCoroutine("RecoverHitBool");
                 }
                 else if (isHit)
                 {
-                    StopCoroutine("RecoverHitBool");
+                    shoverMovement.StopAllCoroutines();
+                    shoverMovement.StartCoroutine("GetHit");
                     StartCoroutine("RecoverHitBool");
                 }
             }
