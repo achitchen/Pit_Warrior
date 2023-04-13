@@ -9,6 +9,9 @@ public class PlayerPotted : MonoBehaviour
     [SerializeField] AudioClip gameOverSound;
     [SerializeField] AudioClip playerPottedSound;
     [SerializeField] ParticleSystem playerPottedParticles;
+    [SerializeField] float shakeDuration = 0.5f;
+    [SerializeField] float shakeMagnitude = 0.35f;
+    private CameraShake cameraShake;
     private Vector3 spawnPosition;
     private GameManager gameManager;
     private UIHandler uiHandler;
@@ -20,6 +23,10 @@ public class PlayerPotted : MonoBehaviour
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             uiHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
         }
+        if (cameraShake == null)
+        {
+            cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        }
         spawnPosition = spawnPoint.transform.position;
     }
 
@@ -29,6 +36,7 @@ public class PlayerPotted : MonoBehaviour
         {
             Debug.Log("PlayerPotted");
             playerPottedParticles.Play();
+            StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
             GameObject player = collision.gameObject;
             player.GetComponent<PlayerMovement>().StopAllCoroutines();
             player.GetComponent<PlayerMovement>().isHit = true;

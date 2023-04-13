@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject playerShove;
     [SerializeField] float attackStartDelay = 0.2f;
     [SerializeField] float attackDuration = 0.7f;
+    [SerializeField] float shakeDuration = .15f;
+    [SerializeField] float shakeMagnitude = .4f;
     [SerializeField] AudioClip bounceSound;
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip[] attackSounds;
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isRespawning = false;
     private Vector2 impactDirection;
     public Vector2 movementDir;
+    public CameraShake cameraShake;
 
     private Rigidbody2D playerRb;
     void Start()
@@ -64,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
         {
             playerSoundSource = gameObject.AddComponent<AudioSource>();
             playerSoundSource.loop = false;
+        }
+        if (cameraShake == null)
+        {
+            cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         }
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uIHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
@@ -300,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 bloodParticles.Play();
                 StopFootsteps();
+                StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
                 playerSoundSource.pitch = Random.Range(0.9f, 1.2f);
                 playerSoundSource.PlayOneShot(hitSound, 0.5f);
                 canAttack = false;

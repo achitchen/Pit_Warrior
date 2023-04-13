@@ -127,11 +127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbccec7bcee1b045933e0b4a228d657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnTime: 2
+  respawnTime: 1
   spawnPoint: {fileID: 0}
   gameOverSound: {fileID: 8300000, guid: 2add0d496e894894bbaa4fa0635b2cd8, type: 3}
   playerPottedSound: {fileID: 8300000, guid: ab67119bca3021c468a093ba6a3e9347, type: 3}
   playerPottedParticles: {fileID: 2398689150306883230}
+  shakeDuration: 0.5
+  shakeMagnitude: 0.35
 --- !u!61 &8034503022872074019
 BoxCollider2D:
   m_ObjectHideFlags: 0

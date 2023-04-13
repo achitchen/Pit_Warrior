@@ -5,13 +5,13 @@ using UnityEngine;
 public class ArenaManager : MonoBehaviour
 {
     public bool canTransport = false;
-    private Camera gameCamera;
+    private GameObject gameCamera;
     [SerializeField] Transform nextArenaSpawn;
     [SerializeField] Transform nextCameraSlot;
 
     void Start()
     {
-        gameCamera = FindObjectOfType<Camera>();
+        gameCamera = GameObject.Find("CameraHolder");
 }
 
     // Update is called once per frame
