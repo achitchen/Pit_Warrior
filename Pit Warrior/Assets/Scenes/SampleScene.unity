@@ -9758,6 +9758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit Wall Container (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 304955812210961863, guid: a68d4deacee9303448d8779d0250c670, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695413500930729583, guid: a68d4deacee9303448d8779d0250c670, type: 3}
       propertyPath: m_RootOrder
       value: 49

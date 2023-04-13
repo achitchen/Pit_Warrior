@@ -8,6 +8,7 @@ public class PlayerPotted : MonoBehaviour
     [SerializeField] GameObject spawnPoint;
     [SerializeField] AudioClip gameOverSound;
     [SerializeField] AudioClip playerPottedSound;
+    [SerializeField] ParticleSystem playerPottedParticles;
     private Vector3 spawnPosition;
     private GameManager gameManager;
     private UIHandler uiHandler;
@@ -27,6 +28,7 @@ public class PlayerPotted : MonoBehaviour
         if (collision.gameObject.tag == "Player" && !GetComponent<EnemyPotted>().isFilled)
         {
             Debug.Log("PlayerPotted");
+            playerPottedParticles.Play();
             GameObject player = collision.gameObject;
             player.GetComponent<PlayerMovement>().StopAllCoroutines();
             player.GetComponent<PlayerMovement>().isHit = true;
