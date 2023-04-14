@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class GameManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource miscSoundsSource;
     [SerializeField] AudioClip bgMusic;
+    [SerializeField] GameObject lightingPanel;
+    [SerializeField] float backgroundLightsTimer = 2f;
+    private bool lightsOn = false;
+    [SerializeField] Color[] lightingColors;
 
     private void Start()
     {
@@ -37,6 +42,8 @@ public class GameManager : MonoBehaviour
         }
         musicSource.Play();
         StartCoroutine("StartMusic");
+        lightingPanel.SetActive(false);
+        StartCoroutine(LightsController());
     }
 
     private void Update()
@@ -52,6 +59,7 @@ public class GameManager : MonoBehaviour
                 score = 0;
                 gameOver = false;
                 StopCoroutine("StartMusic");
+                StopCoroutine(LightsController());
                 musicSource.Stop();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
@@ -88,6 +96,7 @@ public class GameManager : MonoBehaviour
                 gameFinished = false;
                 Time.timeScale = 1;
                 StopCoroutine("StartMusic");
+                StopCoroutine(LightsController());
                 musicSource.Stop();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
@@ -103,5 +112,23 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(160);
         musicSource.Play();
         StartCoroutine("StartMusic");
+    }
+
+    IEnumerator LightsController()
+    {
+        yield return new WaitForSeconds(backgroundLightsTimer);
+        if (!lightsOn)
+        {
+            int index = Random.Range(0, lightingColors.Length - 1);
+            lightingPanel.SetActive(true);
+            lightingPanel.GetComponent<Image>().color = lightingColors[index];
+            lightsOn = true;
+        }
+        else
+        {
+            lightingPanel.SetActive(false);
+            lightsOn = false;
+        }
+        StartCoroutine(LightsController());
     }
 }
