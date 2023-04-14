@@ -41,6 +41,7 @@ public class BounceScript : MonoBehaviour
                 if (!isHit)
                 {
                     shoverMovement.canShove = false;
+                    shoverMovement.StopAllCoroutines();
                     shoverMovement.StartCoroutine("GetHit");
                     isHit = true;
                     StartCoroutine("RecoverHitBool");

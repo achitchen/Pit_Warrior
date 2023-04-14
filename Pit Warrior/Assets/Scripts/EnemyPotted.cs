@@ -41,7 +41,7 @@ public class EnemyPotted : MonoBehaviour
         {
             StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
             enemyPottedParticles.Play();
-            gameManager.miscSoundsSource.PlayOneShot(enemyPottedSound, 0.7f);
+            gameManager.miscSoundsSource.PlayOneShot(enemyPottedSound, 0.9f);
             gameManager.score += 100 * gameManager.scoreMultiplier;
             uIHandler.scoreText.text = "Score: " + gameManager.score;
             if (gameManager.scoreMultiplier < 5)

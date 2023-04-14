@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!gamePaused && !gameOver)
+        if (!gamePaused && !gameOver && !gameFinished)
         {
             if (Input.GetKey(KeyCode.Escape))
             {

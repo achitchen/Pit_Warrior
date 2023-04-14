@@ -44,7 +44,7 @@ public class PlayerPotted : MonoBehaviour
             player.GetComponent<Rigidbody2D>().angularVelocity = 0;
             if (gameManager.playerLives > 0)
             {
-                gameManager.miscSoundsSource.PlayOneShot(playerPottedSound, 1.5f);
+                gameManager.miscSoundsSource.PlayOneShot(playerPottedSound, 1.7f);
                 GetComponent<EnemyPotted>().isFilled = true;
                 player.GetComponent<PlayerMovement>().isRespawning = true;
                 gameManager.playerLives--;
