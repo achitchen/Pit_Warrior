@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         if (!gamePaused && !gameOver && !gameFinished)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
                 gamePaused = true;
                 Time.timeScale = 0;
