@@ -39,6 +39,11 @@ public class PlayerPotted : MonoBehaviour
             StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
             GameObject player = collision.gameObject;
             player.GetComponent<PlayerMovement>().StopAllCoroutines();
+            if (player.GetComponent<PlayerMovement>().playerShove.activeSelf == true)
+            {
+                player.GetComponent<PlayerMovement>().isAttacking = false;
+                player.GetComponent<PlayerMovement>().playerShove.SetActive(false);
+            }
             player.GetComponent<PlayerMovement>().isHit = true;
             player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             player.GetComponent<Rigidbody2D>().angularVelocity = 0;

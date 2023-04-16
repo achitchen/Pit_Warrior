@@ -6,11 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     private float lookDirZ = 0f;
     [SerializeField] int speed = 5;
-    [SerializeField] int launchCharge = 0;
-    [SerializeField] int maxLaunchCharge = 5;
-    [SerializeField] int launchRechargeDelay = 3;
     [SerializeField] int impactForce = 10;
-    [SerializeField] GameObject playerShove;
+    public GameObject playerShove;
     [SerializeField] float attackStartDelay = 0.2f;
     [SerializeField] float attackDuration = 0.7f;
     [SerializeField] float shakeDuration = .15f;
@@ -27,10 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isLookingRight = false;
     private bool isLookingUp = false;
     private bool isLookingDown = false;
-    private bool isChargingLaunch = false;
-    private bool canLaunch = true;
     private bool canAttack = true;
-    private bool isAttacking = false;
+    public bool isAttacking = false;
     private bool hasFootsteps = false;
     private GameManager gameManager;
     private UIHandler uIHandler;
@@ -47,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
         isLookingRight = false;
         isLookingUp = false;
         isLookingDown = false;
-        isChargingLaunch = false;
-        canLaunch = true;
         canAttack = true;
         isMoving = false;
         isHit = false;
@@ -81,12 +74,11 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayer();
         if (!isHit)
         {
-            LaunchPlayer();
             DetermineDirection();
         }
 
         //Shove mechanic
-        if (canAttack && Input.GetKeyDown(KeyCode.Return))
+        if (canAttack && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
             {
             isAttacking = true;
             StartCoroutine(attackSequence());
@@ -101,17 +93,9 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
-    IEnumerator addLaunchCharge()
-    {
-        if (isChargingLaunch && launchCharge <= maxLaunchCharge)
-        launchCharge++;
-        yield return new WaitForSeconds(0.05f);
-        StartCoroutine(addLaunchCharge());
-    }
-
     private void MovePlayer()
     {
-        if (isMoving && !isChargingLaunch && !isHit)
+        if (isMoving && !isHit)
         {
             if (!hasFootsteps)
             {
@@ -237,40 +221,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = false;
         }
-    }
-
-    private void LaunchPlayer()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (canLaunch)
-            {
-                //start charging
-                if (!isChargingLaunch)
-                {
-                    playerRb.velocity = Vector2.zero;
-                    playerRb.angularVelocity = 0f;
-                    StartCoroutine(addLaunchCharge());
-                    isChargingLaunch = true;
-                }
-
-                //add impulse based on charge time
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            playerRb.AddForce(movementDir * launchCharge, ForceMode2D.Impulse);
-            isChargingLaunch = false;
-            canLaunch = false;
-            StartCoroutine(rechargeLaunch());
-            launchCharge = 0;
-        }
-    }
-
-    IEnumerator rechargeLaunch()
-    {
-        yield return new WaitForSeconds(launchRechargeDelay);
-        canLaunch = true;
     }
 
     IEnumerator attackSequence()
