@@ -37,7 +37,10 @@ public class BounceScript : MonoBehaviour
         if (collision.gameObject.tag == "Border")
         {
             animator.SetTrigger("bounceTrigger");
-            collision.gameObject.GetComponent<Animator>().SetTrigger("borderBounceTrigger");
+            if (collision.gameObject.GetComponent<Animator>() != null)
+            {
+                collision.gameObject.GetComponent<Animator>().SetTrigger("borderBounceTrigger");
+            }
             dustParticles.Play();
             gameManager.miscSoundsSource.PlayOneShot(bounceSound, 0.6f);
             impactDirection = (transform.position - collision.transform.position);
