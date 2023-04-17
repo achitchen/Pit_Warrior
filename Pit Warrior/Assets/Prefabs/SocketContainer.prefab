@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 1271907215}
   - component: {fileID: 8034503022872074019}
   - component: {fileID: 7773855863873251116}
+  - component: {fileID: 8492164613594869837}
   m_Layer: 0
   m_Name: SocketContainer
   m_TagString: Untagged
@@ -267,6 +268,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &8492164613594869837
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964178913290565080}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 73270d198d2cd7743a5b97c20506695e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1964178913373698666
 GameObject:
   m_ObjectHideFlags: 0

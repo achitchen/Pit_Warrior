@@ -11,6 +11,7 @@ public class BounceScript : MonoBehaviour
     private Rigidbody2D enemyRb;
     private GameManager gameManager;
     private bool isHit;
+    public Animator animator;
 
     private void Start()
     {
@@ -23,6 +24,10 @@ public class BounceScript : MonoBehaviour
         {
             enemyRb = this.GetComponent<Rigidbody2D>();
         }
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
         isHit = false;
     }
 
@@ -31,6 +36,8 @@ public class BounceScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Border")
         {
+            animator.SetTrigger("bounceTrigger");
+            collision.gameObject.GetComponent<Animator>().SetTrigger("borderBounceTrigger");
             dustParticles.Play();
             gameManager.miscSoundsSource.PlayOneShot(bounceSound, 0.6f);
             impactDirection = (transform.position - collision.transform.position);
@@ -40,6 +47,7 @@ public class BounceScript : MonoBehaviour
                 ShoverMovement shoverMovement = GetComponent<ShoverMovement>();
                 if (!isHit)
                 {
+                    animator.ResetTrigger("shoveTrigger");
                     shoverMovement.canShove = false;
                     shoverMovement.StopAllCoroutines();
                     shoverMovement.StartCoroutine("GetHit");

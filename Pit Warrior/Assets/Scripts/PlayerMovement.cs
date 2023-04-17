@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 impactDirection;
     public Vector2 movementDir;
     public CameraShake cameraShake;
-
+    private Animator animator;
     private Rigidbody2D playerRb;
     void Start()
     {
@@ -64,6 +64,10 @@ public class PlayerMovement : MonoBehaviour
         if (cameraShake == null)
         {
             cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        }
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
         }
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uIHandler = GameObject.Find("GameManager").GetComponent<UIHandler>();
@@ -225,6 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator attackSequence()
     {
+        animator.SetTrigger("playerShoveTrigger");
         yield return new WaitForSeconds(attackStartDelay);
         playerShove.SetActive(true);
         int index = Random.Range(0, attackSounds.Length - 1);
@@ -255,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isAttacking && !isRespawning)
             {
+                animator.SetTrigger("bounceTrigger");
                 bloodParticles.Play();
                 StopFootsteps();
                 StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
@@ -273,6 +279,8 @@ public class PlayerMovement : MonoBehaviour
             {
             if (!isRespawning)
                 {
+                animator.SetTrigger("bounceTrigger");
+                collision.gameObject.GetComponent<Animator>().SetTrigger("borderBounceTrigger");
                 dustParticles.Play();
                 StopFootsteps();
                 playerSoundSource.PlayOneShot(bounceSound, 0.6f);

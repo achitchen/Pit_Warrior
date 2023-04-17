@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1002227118161211132}
   - component: {fileID: 2854184945768108331}
   - component: {fileID: 417001318}
+  - component: {fileID: 6839494225570364640}
   m_Layer: 0
   m_Name: Spinkicker
   m_TagString: Enemy
@@ -112,6 +113,26 @@ MonoBehaviour:
   impactForce: 5
   bounceSound: {fileID: 8300000, guid: f9b476e74b25a81408f6bc5761f0f151, type: 3}
   dustParticles: {fileID: 1892784196270061447}
+--- !u!95 &6839494225570364640
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002227118161211128}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3009e37e40e105a4baba62fda1ec3e1b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1002227119074999758
 GameObject:
   m_ObjectHideFlags: 0

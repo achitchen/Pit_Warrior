@@ -18,6 +18,7 @@ public class ShoverMovement : MonoBehaviour
     [SerializeField] ParticleSystem bloodParticles;
     private AudioSource enemySoundSource;
     private AudioSource bleghSoundSource;
+    private Animator animator;
     private Vector2 impactDirection;
     private float lookDirZ = 0f;
     private GameObject shoverShove;
@@ -36,6 +37,7 @@ public class ShoverMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
+            animator.SetTrigger("bounceTrigger");
             enemySoundSource.pitch = Random.Range(0.9f, 1.1f);
             bloodParticles.Play();
             int index = Random.Range(0, 1);
@@ -99,6 +101,10 @@ public class ShoverMovement : MonoBehaviour
         moveDir = getMoveDir();
         bleghSoundSource.pitch = Random.Range(0.9f, 1.1f);
         bleghSoundSource.Play();
+        if (animator != null)
+        {
+            animator.SetTrigger("shoveTrigger");
+        }
         yield return new WaitForSeconds(attackWindup);
         if (canShove)
         {
@@ -143,6 +149,10 @@ public class ShoverMovement : MonoBehaviour
             bleghSoundSource.loop = false;
             bleghSoundSource.volume = 0.7f;
             bleghSoundSource.clip = enemyAttackSound;
+        }
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
         }
         shoverShove.SetActive(false);
         moveDir = getMoveDir();

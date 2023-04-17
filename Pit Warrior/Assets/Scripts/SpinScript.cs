@@ -63,6 +63,7 @@ public class SpinScript : MonoBehaviour
         if (collision.gameObject.tag == "PlayerAttack" || collision.gameObject.tag == "EnemyAttack")
         {
             enemySoundSource.pitch = Random.Range(0.7f, 1.2f);
+            GetComponent<BounceScript>().animator.SetTrigger("bounceTrigger");
             bloodParticles.Play();
             int index = Random.Range(0, 1);
             enemySoundSource.PlayOneShot(hitSounds[index], 1.4f);

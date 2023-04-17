@@ -314,6 +314,7 @@ GameObject:
   - component: {fileID: 5380005786800260440}
   - component: {fileID: 1348266134316596230}
   - component: {fileID: 6475825887193941646}
+  - component: {fileID: 193403198401503133}
   m_Layer: 0
   m_Name: Shover
   m_TagString: Enemy
@@ -417,6 +418,27 @@ MonoBehaviour:
   impactForce: 5
   bounceSound: {fileID: 8300000, guid: f9b476e74b25a81408f6bc5761f0f151, type: 3}
   dustParticles: {fileID: 5478207039898379469}
+  animator: {fileID: 0}
+--- !u!95 &193403198401503133
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380005786800260444}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3009e37e40e105a4baba62fda1ec3e1b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &3098492398803046343
 PrefabInstance:
   m_ObjectHideFlags: 0
