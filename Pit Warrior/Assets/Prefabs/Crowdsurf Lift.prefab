@@ -98,6 +98,8 @@ MonoBehaviour:
   canTransport: 0
   nextArenaSpawn: {fileID: 0}
   nextCameraSlot: {fileID: 0}
+  arenaTransitionDelay: 1
+  teleportSound: {fileID: 8300000, guid: d1c37f5bdeaa4254b8c0fe88454e2a49, type: 3}
 --- !u!1 &3303048096462272745
 GameObject:
   m_ObjectHideFlags: 0

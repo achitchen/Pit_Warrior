@@ -10697,6 +10697,10 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 689718697}
+    - target: {fileID: 1964178912730025714, guid: 32ec990e2aa830a498a690a5ce13e015, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1964178913290565080, guid: 32ec990e2aa830a498a690a5ce13e015, type: 3}
       propertyPath: m_Name
       value: SocketContainer
@@ -20459,6 +20463,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5366531226318258311, guid: a57625dbb621ac04c99637e1f284e45c, type: 3}
+      propertyPath: teleportSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d1c37f5bdeaa4254b8c0fe88454e2a49, type: 3}
     - target: {fileID: 5366531226318258311, guid: a57625dbb621ac04c99637e1f284e45c, type: 3}
       propertyPath: nextArenaSpawn
       value: 

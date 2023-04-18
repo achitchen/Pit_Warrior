@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isLookingDown = false;
     private bool canAttack = true;
     public bool isAttacking = false;
+    public bool isTeleporting = false;
     private bool hasFootsteps = false;
     private GameManager gameManager;
     private UIHandler uIHandler;
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = false;
         isHit = false;
         isAttacking = false;
+        isTeleporting = false;
         lookDirZ = 0f;
         movementDir = Vector2.up;
 
@@ -99,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        if (isMoving && !isHit)
+        if (isMoving && !isHit && !isTeleporting)
         {
             if (!hasFootsteps)
             {
@@ -277,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Border")
             {
-            if (!isRespawning)
+            if (!isRespawning && !isTeleporting)
                 {
                 animator.SetTrigger("bounceTrigger");
                 collision.gameObject.GetComponent<Animator>().SetTrigger("borderBounceTrigger");

@@ -8,23 +8,44 @@ public class ArenaManager : MonoBehaviour
     private GameObject gameCamera;
     [SerializeField] Transform nextArenaSpawn;
     [SerializeField] Transform nextCameraSlot;
+    [SerializeField] float arenaTransitionDelay = 1f;
+    [SerializeField] AudioClip teleportSound;
+    private AudioSource teleportSoundSource;
 
     void Start()
     {
         gameCamera = GameObject.Find("CameraHolder");
+        teleportSoundSource = gameObject.AddComponent<AudioSource>();
+        teleportSoundSource.loop = false;
+        teleportSoundSource.volume = 1f;
 }
-
-    // Update is called once per frame
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && canTransport)
         {
-            Debug.Log("Transporting Player");
+            
             collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             collision.GetComponent<Rigidbody2D>().angularVelocity = 0f;
-            collision.transform.position = nextArenaSpawn.position;
-            gameCamera.transform.position = nextCameraSlot.position;
+            teleportSoundSource.PlayOneShot(teleportSound);
+            if (!collision.GetComponent<PlayerMovement>().isTeleporting)
+            {
+                collision.GetComponent<PlayerMovement>().isTeleporting = true;
+                StartCoroutine(TeleportPlayer(collision.gameObject));
+            }
+            
         }
+    }
+
+    private IEnumerator TeleportPlayer(GameObject player)
+    {
+        yield return new WaitForSeconds(arenaTransitionDelay);
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        player.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        player.transform.position = nextArenaSpawn.position;
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        player.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        gameCamera.transform.position = nextCameraSlot.position;
+        player.GetComponent<PlayerMovement>().isTeleporting = false;
     }
 }
